@@ -1,0 +1,30 @@
+# Sample input data
+$emails = @"
+junk text --- fafaf --- john.doe123@example.com
+sarah.smith456@testmail.com
+mike.jones789@fakemail.org
+emily.williams000@samplemail.net
+alex.brown321@demoemail.com
+this is some text
+junk text to test filter --- fafaf fa afjflaf lisa.white987@temporarymail.co
+david.miller654@fakemail.org
+qiurwqeqncna sophia.martin432@mockmail.net
+william.johnson112@demo.com
+olivia.moore765@quickmail.io
+.com.org.apple.google
+"@
+
+# Split the string into lines and filter valid email addresses using regex
+$validEmails = $emails -split "`n" | ForEach-Object {
+    # Use regex to extract valid email addresses from each line
+    if ($_ -match "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b") {
+        # Return the matched email part
+        $_ -replace '.*?(\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b).*', '$1'
+    }
+}
+clear
+# Display the filtered valid emails, removing any null/empty values
+for ($i =0; $i -lt $validEmails.Length; $i++ ){
+$num = $i+1
+Write-Host $num".)" $validEmails[$i].trim()
+}
